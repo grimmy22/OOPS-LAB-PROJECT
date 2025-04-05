@@ -8,15 +8,15 @@
 #include <fstream>
 
 #define MAX_SIZE 9
-#define MAX_MOVES 100 // Maximum number of moves to store
+#define MAX_MOVES 100 
 
 class Sudoku {
 private:
     int gridSize;
     int board[MAX_SIZE][MAX_SIZE];
-    int originalBoard[MAX_SIZE][MAX_SIZE]; // Store original puzzle
+    int originalBoard[MAX_SIZE][MAX_SIZE]; 
     
-    // Move history using arrays instead of vector
+    
     int moveRow[MAX_MOVES];
     int moveCol[MAX_MOVES];
     int moveValue[MAX_MOVES];
@@ -34,7 +34,7 @@ private:
     bool fillRemaining(int row, int col);
     void removeDigits(int difficulty);
     
-    // New hint system related private methods
+    
     bool getSingleCellCandidates(int row, int col, bool candidates[MAX_SIZE+1]);
     void findNakedSingles(int& row, int& col, int& value);
     void findHiddenSingles(int& row, int& col, int& value);
@@ -50,7 +50,7 @@ public:
     bool isValidMove(int row, int col, int num);
     bool isOriginalCell(int row, int col);
     
-    // Improved features
+    
     void undoMove();
     void saveGame(const char* filename);
     bool loadGame(const char* filename);
@@ -62,7 +62,7 @@ public:
     int getScore() const;
     void showGameStats();
     
-    // New hint system methods
+    
     void showTargetedHint();
     void showCellCandidates(int row, int col);
     void showNextLogicalMove();

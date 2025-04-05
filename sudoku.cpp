@@ -4,6 +4,7 @@
 #include <ctime>
 #include <cmath>
 #include <cstring>
+#include <string>
 
 using namespace std;
 
@@ -14,10 +15,10 @@ Sudoku::Sudoku() {
     moveCount = 0;
     score = 0;
     hintsUsed = 0;
-    hintsRemaining = 3; // Default number of hints
+    hintsRemaining = 3; 
     strcpy(playerName, "Player");
 
-    // Initialize board and original board
+    
     for (int i = 0; i < gridSize; i++) {
         for (int j = 0; j < gridSize; j++) {
             board[i][j] = 0;
@@ -25,7 +26,7 @@ Sudoku::Sudoku() {
         }
     }
 
-    // Initialize move history
+    
     for (int i = 0; i < MAX_MOVES; i++) {
         moveRow[i] = -1;
         moveCol[i] = -1;
@@ -38,21 +39,21 @@ Sudoku::Sudoku() {
 }
 
 bool Sudoku::isValidPlacement(int row, int col, int num) {
-    // Check if number exists in row
+    
     for (int j = 0; j < gridSize; j++) {
         if (board[row][j] == num) {
             return false;
         }
     }
 
-    // Check if number exists in column
+    
     for (int i = 0; i < gridSize; i++) {
         if (board[i][col] == num) {
             return false;
         }
     }
 
-    // Check if number exists in 3x3 box
+    
     int boxSize = sqrt(gridSize);
     int boxRow = row - row % boxSize;
     int boxCol = col - col % boxSize;
@@ -139,16 +140,16 @@ void Sudoku::removeDigits(int difficulty) {
 
     switch (difficulty) {
         case 1:
-            removeCount = 30; // Easy
+            removeCount = 30; 
             break;
         case 2:
-            removeCount = 40; // Medium
+            removeCount = 40; 
             break;
         case 3:
-            removeCount = 50; // Hard
+            removeCount = 50; 
             break;
         case 4:
-            removeCount = 60; // Expert
+            removeCount = 60; 
             break;
         default:
             removeCount = 30;
@@ -192,24 +193,24 @@ bool Sudoku::solveSudoku() {
 void Sudoku::generatePuzzle(int difficulty) {
     cout << "Generating puzzle with difficulty level " << difficulty << endl;
 
-    // Fill the diagonal boxes first
+    
     fillDiagonal();
 
-    // Fill remaining cells
+    
     int boxSize = sqrt(gridSize);
     fillRemaining(0, boxSize);
 
-    // Save the complete solution before removing digits
+    
     for (int i = 0; i < gridSize; i++) {
         for (int j = 0; j < gridSize; j++) {
             originalBoard[i][j] = board[i][j];
         }
     }
 
-    // Remove digits to create puzzle
+    
     removeDigits(difficulty);
     
-    // Reset hints based on difficulty
+    
     resetHints(difficulty);
 
     cout << "Puzzle generation complete" << endl;
@@ -220,7 +221,7 @@ void Sudoku::printBoard() {
 
     int boxSize = sqrt(gridSize);
 
-    // Print column numbers
+    
     cout << "   ";
     for (int j = 0; j < gridSize; j++) {
         cout << (j + 1) << " ";
@@ -230,7 +231,7 @@ void Sudoku::printBoard() {
     }
     cout << endl;
 
-    // Print top border
+    
     cout << "  ";
     cout << "+";
     for (int box = 0; box < boxSize; box++) {
@@ -241,12 +242,12 @@ void Sudoku::printBoard() {
     }
     cout << endl;
 
-    // Print board with row numbers
+    
     for (int i = 0; i < gridSize; i++) {
-        // Print row number
+        
         cout << (i + 1) << " |";
 
-        // Print row contents
+        
         for (int j = 0; j < gridSize; j++) {
             if (board[i][j] == 0) {
                 cout << " .";
@@ -261,7 +262,7 @@ void Sudoku::printBoard() {
         cout << " |";
         cout << endl;
 
-        // Print horizontal dividers between boxes
+        
         if ((i + 1) % boxSize == 0 && i < gridSize - 1) {
             cout << "  +";
             for (int box = 0; box < boxSize; box++) {
@@ -274,7 +275,7 @@ void Sudoku::printBoard() {
         }
     }
 
-    // Print bottom border
+    
     cout << "  +";
     for (int box = 0; box < boxSize; box++) {
         for (int j = 0; j < boxSize * 2 + 1; j++) {
@@ -290,7 +291,7 @@ void Sudoku::printBoardWithHints() {
 
     int boxSize = sqrt(gridSize);
 
-    // Print column numbers
+    
     cout << "   ";
     for (int j = 0; j < gridSize; j++) {
         cout << (j + 1) << " ";
@@ -300,7 +301,7 @@ void Sudoku::printBoardWithHints() {
     }
     cout << endl;
 
-    // Print top border
+    
     cout << "  ";
     cout << "+";
     for (int box = 0; box < boxSize; box++) {
@@ -311,21 +312,21 @@ void Sudoku::printBoardWithHints() {
     }
     cout << endl;
 
-    // Print board with row numbers
+    
     for (int i = 0; i < gridSize; i++) {
-        // Print row number
+        
         cout << (i + 1) << " |";
 
-        // Print row contents
+        
         for (int j = 0; j < gridSize; j++) {
             if (board[i][j] == 0) {
                 cout << " .";
             } else {
-                // Highlight the original cells (fixed numbers)
+                
                 if (isOriginalCell(i, j)) {
-                    cout << "*" << board[i][j];  // Mark original cells with an asterisk
+                    cout << "*" << board[i][j];  
                 } else {
-                    cout << " " << board[i][j];  // Player's moves
+                    cout << " " << board[i][j];  
                 }
             }
 
@@ -336,7 +337,7 @@ void Sudoku::printBoardWithHints() {
         cout << " |";
         cout << endl;
 
-        // Print horizontal dividers between boxes
+        
         if ((i + 1) % boxSize == 0 && i < gridSize - 1) {
             cout << "  +";
             for (int box = 0; box < boxSize; box++) {
@@ -349,7 +350,7 @@ void Sudoku::printBoardWithHints() {
         }
     }
 
-    // Print bottom border
+    
     cout << "  +";
     for (int box = 0; box < boxSize; box++) {
         for (int j = 0; j < boxSize * 2 + 1; j++) {
@@ -364,7 +365,7 @@ void Sudoku::printBoardWithHints() {
 void Sudoku::setCellValue(int row, int col, int value) {
     if (row >= 0 && row < gridSize && col >= 0 && col < gridSize) {
         if (!isOriginalCell(row, col)) {
-            // Store the previous value for undo functionality
+            
             if (moveCount < MAX_MOVES) {
                 moveRow[moveCount] = row;
                 moveCol[moveCount] = col;
@@ -372,12 +373,12 @@ void Sudoku::setCellValue(int row, int col, int value) {
                 moveCount++;
             }
             
-            // Set the new value
+            
             board[row][col] = value;
             
-            // Update score based on correct placement
+            
             if (value == originalBoard[row][col]) {
-                updateScore(10); // Award points for correct placement
+                updateScore(10); 
                 cout << "Correct placement! +10 points" << endl;
             }
         } else {
@@ -387,7 +388,7 @@ void Sudoku::setCellValue(int row, int col, int value) {
 }
 
 bool Sudoku::isSolved() {
-    // Check if all cells are filled
+    
     for (int i = 0; i < gridSize; i++) {
         for (int j = 0; j < gridSize; j++) {
             if (board[i][j] == 0) {
@@ -396,12 +397,12 @@ bool Sudoku::isSolved() {
         }
     }
 
-    // Check if all values are correct
+    
     for (int i = 0; i < gridSize; i++) {
         for (int j = 0; j < gridSize; j++) {
             int num = board[i][j];
 
-            // Temporarily remove the number and check if it's valid
+            
             board[i][j] = 0;
             if (!isValidPlacement(i, j, num)) {
                 board[i][j] = num;
@@ -419,12 +420,12 @@ bool Sudoku::isValidMove(int row, int col, int num) {
 }
 
 bool Sudoku::isOriginalCell(int row, int col) {
-    // Check if the cell was part of the original puzzle
-    // originalBoard has zeros for empty cells in the original puzzle
+    
+    
     return originalBoard[row][col] != 0 && board[row][col] == originalBoard[row][col];
 }
 
-// ------ Improved Features ------
+
 
 void Sudoku::undoMove() {
     if (moveCount > 0) {
@@ -449,24 +450,24 @@ void Sudoku::saveGame(const char* filename) {
         return;
     }
     
-    // Save grid size
+    
     file.write((char*)&gridSize, sizeof(gridSize));
     
-    // Save board
+    
     for (int i = 0; i < gridSize; i++) {
         for (int j = 0; j < gridSize; j++) {
             file.write((char*)&board[i][j], sizeof(board[i][j]));
         }
     }
     
-    // Save original board
+    
     for (int i = 0; i < gridSize; i++) {
         for (int j = 0; j < gridSize; j++) {
             file.write((char*)&originalBoard[i][j], sizeof(originalBoard[i][j]));
         }
     }
     
-    // Save move history
+    
     file.write((char*)&moveCount, sizeof(moveCount));
     for (int i = 0; i < moveCount; i++) {
         file.write((char*)&moveRow[i], sizeof(moveRow[i]));
@@ -474,11 +475,11 @@ void Sudoku::saveGame(const char* filename) {
         file.write((char*)&moveValue[i], sizeof(moveValue[i]));
     }
     
-    // Save player info
+    
     file.write((char*)&playerName, sizeof(playerName));
     file.write((char*)&score, sizeof(score));
     
-    // Save hint information
+    
     file.write((char*)&hintsUsed, sizeof(hintsUsed));
     file.write((char*)&hintsRemaining, sizeof(hintsRemaining));
     
@@ -494,24 +495,24 @@ bool Sudoku::loadGame(const char* filename) {
         return false;
     }
     
-    // Load grid size
+    
     file.read((char*)&gridSize, sizeof(gridSize));
     
-    // Load board
+    
     for (int i = 0; i < gridSize; i++) {
         for (int j = 0; j < gridSize; j++) {
             file.read((char*)&board[i][j], sizeof(board[i][j]));
         }
     }
     
-    // Load original board
+    
     for (int i = 0; i < gridSize; i++) {
         for (int j = 0; j < gridSize; j++) {
             file.read((char*)&originalBoard[i][j], sizeof(originalBoard[i][j]));
         }
     }
     
-    // Load move history
+    
     file.read((char*)&moveCount, sizeof(moveCount));
     for (int i = 0; i < moveCount; i++) {
         file.read((char*)&moveRow[i], sizeof(moveRow[i]));
@@ -519,11 +520,11 @@ bool Sudoku::loadGame(const char* filename) {
         file.read((char*)&moveValue[i], sizeof(moveValue[i]));
     }
     
-    // Load player info
+    
     file.read((char*)&playerName, sizeof(playerName));
     file.read((char*)&score, sizeof(score));
     
-    // Load hint information
+    
     file.read((char*)&hintsUsed, sizeof(hintsUsed));
     file.read((char*)&hintsRemaining, sizeof(hintsRemaining));
     
@@ -538,7 +539,7 @@ void Sudoku::showHint() {
         return;
     }
 
-    // Find a random empty cell
+    
     int emptyCount = 0;
     for (int i = 0; i < gridSize; i++) {
         for (int j = 0; j < gridSize; j++) {
@@ -556,7 +557,7 @@ void Sudoku::showHint() {
     int targetCell = rand() % emptyCount;
     int row = -1, col = -1;
     
-    // Find the target empty cell
+    
     int count = 0;
     for (int i = 0; i < gridSize; i++) {
         for (int j = 0; j < gridSize; j++) {
@@ -572,11 +573,11 @@ void Sudoku::showHint() {
         if (row != -1) break;
     }
     
-    // Provide hint
+    
     cout << "Hint: The cell at row " << (row+1) << ", column " << (col+1) << " should contain " 
          << originalBoard[row][col] << endl;
     
-    // Deduct points for using a hint
+    
     updateScore(-5);
     hintsUsed++;
     hintsRemaining--;
@@ -584,7 +585,7 @@ void Sudoku::showHint() {
 }
 
 void Sudoku::resetPuzzle() {
-    // Reset board to original state with only original cells filled
+    
     for (int i = 0; i < gridSize; i++) {
         for (int j = 0; j < gridSize; j++) {
             if (originalBoard[i][j] == 0) {
@@ -595,13 +596,13 @@ void Sudoku::resetPuzzle() {
         }
     }
     
-    // Reset move history
+    
     moveCount = 0;
     
-    // Reset score and hints
+    
     score = 0;
     
-    // Determine difficulty level based on empty cells in original board
+    
     int emptyCells = 0;
     for (int i = 0; i < gridSize; i++) {
         for (int j = 0; j < gridSize; j++) {
@@ -612,10 +613,10 @@ void Sudoku::resetPuzzle() {
     }
     
     int difficulty;
-    if (emptyCells <= 30) difficulty = 1; // Easy
-    else if (emptyCells <= 40) difficulty = 2; // Medium
-    else if (emptyCells <= 50) difficulty = 3; // Hard
-    else difficulty = 4; // Expert
+    if (emptyCells <= 30) difficulty = 1; 
+    else if (emptyCells <= 40) difficulty = 2; 
+    else if (emptyCells <= 50) difficulty = 3; 
+    else difficulty = 4; 
     
     resetHints(difficulty);
     
@@ -624,7 +625,7 @@ void Sudoku::resetPuzzle() {
 
 void Sudoku::setPlayerName(const char* name) {
     strncpy(playerName, name, sizeof(playerName) - 1);
-    playerName[sizeof(playerName) - 1] = '\0'; // Ensure null-termination
+    playerName[sizeof(playerName) - 1] = '\0'; 
 }
 
 const char* Sudoku::getPlayerName() const {
@@ -648,7 +649,7 @@ void Sudoku::showGameStats() {
     cout << "Hints used: " << hintsUsed << endl;
     cout << "Hints remaining: " << hintsRemaining << endl;
     
-    // Calculate completion percentage
+    
     int filledCells = 0;
     int totalNonOriginalCells = 0;
     
@@ -672,37 +673,37 @@ void Sudoku::showGameStats() {
     cout << "===========================" << endl;
 }
 
-// New hint system methods
+
 
 bool Sudoku::getSingleCellCandidates(int row, int col, bool candidates[MAX_SIZE+1]) {
     if (board[row][col] != 0) {
-        // Cell already filled
+        
         for (int i = 1; i <= gridSize; i++) {
             candidates[i] = false;
         }
         return false;
     }
     
-    // Initialize all candidates as possible
+    
     for (int i = 1; i <= gridSize; i++) {
         candidates[i] = true;
     }
     
-    // Check row constraints
+    
     for (int j = 0; j < gridSize; j++) {
         if (board[row][j] != 0) {
             candidates[board[row][j]] = false;
         }
     }
     
-    // Check column constraints
+    
     for (int i = 0; i < gridSize; i++) {
         if (board[i][col] != 0) {
             candidates[board[i][col]] = false;
         }
     }
     
-    // Check box constraints
+    
     int boxSize = sqrt(gridSize);
     int boxRow = row - row % boxSize;
     int boxCol = col - col % boxSize;
@@ -715,7 +716,7 @@ bool Sudoku::getSingleCellCandidates(int row, int col, bool candidates[MAX_SIZE+
         }
     }
     
-    // Count valid candidates
+    
     int validCount = 0;
     for (int i = 1; i <= gridSize; i++) {
         if (candidates[i]) {
@@ -761,7 +762,7 @@ void Sudoku::showCellCandidates(int row, int col) {
     
     hintsUsed++;
     hintsRemaining--;
-    updateScore(-3); // Less costly than a direct hint
+    updateScore(-3); 
     cout << "Using candidate hint costs 3 points. Hints remaining: " << hintsRemaining << endl;
 }
 
@@ -797,10 +798,10 @@ void Sudoku::findNakedSingles(int& row, int& col, int& value) {
 void Sudoku::findHiddenSingles(int& row, int& col, int& value) {
     row = col = value = -1;
     
-    // Check rows for hidden singles
+    
     for (int i = 0; i < gridSize && row == -1; i++) {
-        int valueCounts[MAX_SIZE+1] = {0}; // Count of each value in candidates
-        int valuePositions[MAX_SIZE+1][2]; // Store the position of each value
+        int valueCounts[MAX_SIZE+1] = {0}; 
+        int valuePositions[MAX_SIZE+1][2]; 
         
         for (int j = 0; j < gridSize; j++) {
             if (board[i][j] == 0) {
@@ -817,7 +818,7 @@ void Sudoku::findHiddenSingles(int& row, int& col, int& value) {
             }
         }
         
-        // Check if any value appears only once
+        
         for (int v = 1; v <= gridSize; v++) {
             if (valueCounts[v] == 1) {
                 row = valuePositions[v][0];
@@ -828,7 +829,7 @@ void Sudoku::findHiddenSingles(int& row, int& col, int& value) {
         }
     }
     
-    // If no hidden singles found in rows, check columns
+    
     for (int j = 0; j < gridSize && row == -1; j++) {
         int valueCounts[MAX_SIZE+1] = {0};
         int valuePositions[MAX_SIZE+1][2];
@@ -858,7 +859,7 @@ void Sudoku::findHiddenSingles(int& row, int& col, int& value) {
         }
     }
     
-    // Check boxes for hidden singles
+    
     int boxSize = sqrt(gridSize);
     for (int boxRow = 0; boxRow < gridSize && row == -1; boxRow += boxSize) {
         for (int boxCol = 0; boxCol < gridSize && row == -1; boxCol += boxSize) {
@@ -902,10 +903,10 @@ void Sudoku::showNextLogicalMove() {
     
     int row, col, value;
     
-    // First try to find a naked single (only one possible value for a cell)
+    
     findNakedSingles(row, col, value);
     
-    // If no naked singles, try to find a hidden single
+    
     if (row == -1) {
         findHiddenSingles(row, col, value);
     }
@@ -914,14 +915,14 @@ void Sudoku::showNextLogicalMove() {
         cout << "Logical move: Place " << value << " at row " << (row+1) << ", column " << (col+1) << endl;
         cout << "Reasoning: This is the only valid placement based on Sudoku rules." << endl;
     } else {
-        // If no logical move found, give a direct hint for a random cell
+        
         showHint();
         return;
     }
     
     hintsUsed++;
     hintsRemaining--;
-    updateScore(-7); // More costly than candidates but less than direct solution
+    updateScore(-7); 
     cout << "Using logical move hint costs 7 points. Hints remaining: " << hintsRemaining << endl;
 }
 
@@ -938,7 +939,7 @@ void Sudoku::showTargetedHint() {
     cout << "Column (1-9): ";
     cin >> col;
     
-    // Adjust to 0-based indexing
+    
     row--;
     col--;
     
@@ -952,7 +953,7 @@ void Sudoku::showTargetedHint() {
         return;
     }
     
-    // Give the correct value for the targeted cell
+    
     cout << "Hint: The cell at row " << (row+1) << ", column " << (col+1) 
          << " should contain " << originalBoard[row][col] << endl;
     
@@ -971,18 +972,18 @@ int Sudoku::getHintsUsed() const {
 }
 
 void Sudoku::resetHints(int difficulty) {
-    // Set available hints based on difficulty level
+    
     switch (difficulty) {
-        case 1: // Easy
+        case 1: 
             hintsRemaining = 5;
             break;
-        case 2: // Medium
+        case 2: 
             hintsRemaining = 4;
             break;
-        case 3: // Hard
+        case 3: 
             hintsRemaining = 3;
             break;
-        case 4: // Expert
+        case 4: 
             hintsRemaining = 2;
             break;
         default:
